@@ -2,6 +2,6 @@ var http = require('http');
 
 //create a server object:
 http.createServer(function(req, res) {
-    res.write('Hello World 9.0'); //write a response to the client
+    res.write('Hello World 1.0'); //write a response to the client
     res.end(); //end the response
 }).listen(3080);
