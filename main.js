@@ -1,7 +1,6 @@
-var http = require('http');
+const express = require('express')
+const app = express
+const port = 3000
 
-//create a server object:
-http.createServer(function(req, res) {
-    res.write('Hello World 7.0'); //write a response to the client
-    res.end(); //end the response
-}).listen(3080);
+app.get('/', (req, res) => res.send('Hello world'))
+app.listen(port, () => console.log("Connected by port ${port}"))
