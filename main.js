@@ -23,5 +23,24 @@ app.post('/login', (req, res) => {
         res.json(rows);
     });
 });
+app.post('/register', (req, res) => {
+    var keys = Object.keys(req.body);
+    var values = Object.values(req.body);
+    var Query = `INSERT INTO ${values[0]}(${keys[1]},${keys[2]},${keys[3]}) VALUES('${values[1]}','${values[2]}','${values[3]}')`;
+    db().query(Query, function(err, rows, fields) {
+        if (err) {
+            console.log("error");
+            if (err["errno"] = 1062) {
+                res.json("Usename or ID already Exists");
+            } else {
+                res.json("Something wnet wrong");
+            }
+
+        } else {
+            console.log("no error");
+            res.json("OKay");
+        }
+    });
+});
 
 app.listen(port, () => console.log('Connected by port'));
