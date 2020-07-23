@@ -19,8 +19,16 @@ app.post('/login', (req, res) => {
     var values = Object.values(req.body);
     var Query = `SELECT ${keys[1]} FROM ${values[0]} where ${keys[1]}='${values[1]}' and ${keys[2]}='${values[2]}'`;
     db().query(Query, function(err, rows, fields) {
-        console.log(rows);
-        res.json("Loggedin");
+        try {
+            if (rows.length > 0) {
+                if (rows[0].username == values[1]) res.json("matched");
+            } else {
+                res.json("nomatch");
+            }
+        } catch (e) {
+            console.log(e);
+            res.json("error");
+        }
     });
 });
 app.post('/register', (req, res) => {
@@ -28,17 +36,21 @@ app.post('/register', (req, res) => {
     var values = Object.values(req.body);
     var Query = `INSERT INTO ${values[0]}(${keys[1]},${keys[2]},${keys[3]}) VALUES('${values[1]}','${values[2]}','${values[3]}')`;
     db().query(Query, function(err, rows, fields) {
-        if (err) {
-            console.log("error");
-            if (err["errno"] = 1062) {
-                res.json("Usename or ID already Exists");
+        try {
+            if (err) {
+                console.log("error");
+                if (err["errno"] = 1062) {
+                    res.json("Usename or ID already Exists");
+                } else {
+                    res.json("Something went wrong");
+                }
             } else {
-                res.json("Something wnet wrong");
+                console.log("no error");
+                res.json("registered");
             }
-
-        } else {
-            console.log("no error");
-            res.json("OKay");
+        } catch (e) {
+            console.log("error");
+            res.json("error");
         }
     });
 });
