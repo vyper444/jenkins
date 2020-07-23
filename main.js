@@ -20,7 +20,7 @@ app.post('/login', (req, res) => {
     var Query = `SELECT ${keys[1]} FROM ${values[0]} where ${keys[1]}='${values[1]}' and ${keys[2]}='${values[2]}'`;
     db().query(Query, function(err, rows, fields) {
         console.log(rows);
-        res.json(rows);
+        res.json("Loggedin");
     });
 });
 app.post('/register', (req, res) => {
